@@ -1,0 +1,66 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "WellnessPlan API (HTTPS)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/src/AdventureWorks.WebApi/bin/Debug/net9.0/AdventureWorks.WebApi.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/AdventureWorks.WebApi",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)",
+                "uriFormat": "%s/swagger"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "ASPNETCORE_URLS": "https://localhost:5001;http://localhost:5000"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
+        },
+        {
+            "name": "WellnessPlan API (HTTP)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/src/AdventureWorks.WebApi/bin/Debug/net9.0/AdventureWorks.WebApi.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/AdventureWorks.WebApi",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)",
+                "uriFormat": "%s/swagger"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "ASPNETCORE_URLS": "https://localhost:5001;http://localhost:5000"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
+        },
+        {
+            "name": ".NET Core Attach",
+            "type": "coreclr",
+            "request": "attach"
+        },
+        {
+            "name": "Docker Debug",
+            "type": "docker",
+            "request": "launch",
+            "preLaunchTask": "docker-compose-up",
+            "netCore": {
+                "appProject": "${workspaceFolder}/src/AdventureWorks.WebApi/AdventureWorks.WebApi.csproj"
+            },
+            "dockerServerReadyAction": {
+                "uriFormat": "%s://${HOST}:${PORT}/swagger"
+            }
+        }
+    ]
+}
