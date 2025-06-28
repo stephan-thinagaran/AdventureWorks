@@ -27,7 +27,7 @@ jobs:
         run: dotnet test AdventureWorks.sln --no-build --verbosity normal
 
       - name: Build Docker image
-        run: docker build -t wellnessplan-webapi .
+        run: docker build -t adventureworks-webapi .
 
       # Optionally, push to Docker Hub or Azure Container Registry here
 

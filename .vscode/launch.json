@@ -2,7 +2,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "WellnessPlan API (HTTPS)",
+            "name": "AdventureWorks API (HTTPS)",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
@@ -24,7 +24,7 @@
             }
         },
         {
-            "name": "WellnessPlan API (HTTP)",
+            "name": "AdventureWorks API (HTTP)",
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
@@ -60,6 +60,15 @@
             },
             "dockerServerReadyAction": {
                 "uriFormat": "%s://${HOST}:${PORT}/swagger"
+            }
+        },
+        {
+            "name": "Containers: .NET Launch",
+            "type": "docker",
+            "request": "launch",
+            "preLaunchTask": "docker-run: debug",
+            "netCore": {
+                "appProject": "${workspaceFolder}/src/AdventureWorks.WebApi/AdventureWorks.WebApi.csproj"
             }
         }
     ]

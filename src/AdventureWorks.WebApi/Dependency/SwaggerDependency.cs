@@ -11,9 +11,9 @@ internal static class SwaggerDependency
         {
             c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
             {
-                Title = "WellnessPlan API",
+                Title = "AdventureWorks API",
                 Version = "v1",
-                Description = "WellnessPlan Web API"
+                Description = "AdventureWorks Web API"
             });
         });
 
@@ -27,12 +27,12 @@ internal static class SwaggerDependency
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "WellnessPlan API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "AdventureWorks API V1");
                 c.RoutePrefix = string.Empty; // Serve the Swagger UI at the app's root
             });
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "WellnessPlan");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "AdventureWorks");
             });
         }
         return app;

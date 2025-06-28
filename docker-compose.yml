@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   webapi:
-    image: wellnessplan-webapi
+    image: adventureworks-webapi
     build:
       context: .
       dockerfile: Dockerfile
