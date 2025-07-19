@@ -1,12 +1,12 @@
-version: '3.9'
-
 services:
   webapi:
     image: adventureworks-webapi
     container_name: adventureworks-webapi-dev
     build:
       context: .
-      dockerfile: src/AdventureWorks.WebApi/Dockerfile.debug
+      dockerfile: src/AdventureWorks.WebApi/Dockerfile
+      # Debug Uncomment the line below for debugging
+      # dockerfile: src/AdventureWorks.WebApi/Dockerfile.debug
     ports:
       - "5000:80"
       - "5001:443"
@@ -16,7 +16,7 @@ services:
       - ASPNETCORE_Kestrel__Certificates__Default__Password=cloudiq@123
       - ASPNETCORE_Kestrel__Certificates__Default__Path=/aspnetapp.pfx
       - Redis__ConnectionString=redis:6379
-      - Seq__ServerUrl=http://seq:5341
+      - Seq__ServerUrl=http://seq:80
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
       - ./aspnetapp.pfx:/aspnetapp.pfx:ro

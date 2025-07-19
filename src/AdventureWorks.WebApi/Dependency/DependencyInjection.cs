@@ -7,6 +7,7 @@ using AdventureWorks.WebApi.Infrastructure.Messaging;
 using AdventureWorks.WebApi.EndPoints.HumanResources.Employee;
 using AdventureWorks.WebApi.Common.Middleware;
 using AdventureWorks.WebApi.Common.Extensions;
+using Serilog;
 
 namespace AdventureWorks.WebApi.Dependency;
 
@@ -16,9 +17,21 @@ public static class DependencyInjection
     // App Builder Dependencies
     internal static WebApplicationBuilder CoreBuilder(this WebApplicationBuilder webApplicationBuilder, IConfiguration configuration)
     {
+        webApplicationBuilder.ConfigureSerilog();
         webApplicationBuilder.Services.RegisterDependencies(configuration);
         webApplicationBuilder.AddFluentValidationEndpointFilter();
         return webApplicationBuilder;
+    }
+
+    // Configure Serilog
+    internal static WebApplicationBuilder ConfigureSerilog(this WebApplicationBuilder builder)
+    {
+        builder.Host.UseSerilog((context, services, configuration) => configuration
+            .ReadFrom.Configuration(context.Configuration)
+            .ReadFrom.Services(services)
+            .Enrich.FromLogContext());
+        
+        return builder;
     }
 
     internal static WebApplication MapServices(this WebApplication webApplication, IConfiguration configuration)
@@ -74,7 +87,7 @@ public static class DependencyInjection
         services.AddDbContext<AdventureWorksDbContext>(options =>
             options.UseSqlServer(connectionString)); // Or your specific provider
 
-        services.AddScoped<DbContext>(provider=> provider.GetRequiredService<AdventureWorksDbContext>());
+        services.AddScoped<DbContext>(provider => provider.GetRequiredService<AdventureWorksDbContext>());
 
         return services;
     }
