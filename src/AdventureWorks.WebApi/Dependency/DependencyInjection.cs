@@ -84,8 +84,15 @@ public static class DependencyInjection
             // Handle missing connection string appropriately - throw exception or log error
             throw new InvalidOperationException("Connection string 'AdventureWorksConnection' not found.");
         }
-        services.AddDbContext<AdventureWorksDbContext>(options =>
-            options.UseSqlServer(connectionString)); // Or your specific provider
+
+        // Register DbContext and Query Logging Interceptor
+        services.AddScoped<QueryLoggingInterceptor>();
+        services.AddDbContext<AdventureWorksDbContext>((provider, options) =>
+        {
+            var interceptor = provider.GetRequiredService<QueryLoggingInterceptor>();
+            options.UseSqlServer(connectionString)
+                   .AddInterceptors(interceptor);
+        });
 
         services.AddScoped<DbContext>(provider => provider.GetRequiredService<AdventureWorksDbContext>());
 
