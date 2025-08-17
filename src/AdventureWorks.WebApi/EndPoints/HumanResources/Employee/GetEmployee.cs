@@ -1,10 +1,12 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using AdventureWorks.WebApi.Infrastructure.Database;
 using Entity = AdventureWorks.WebApi.Infrastructure.Database.AdventureWorks.Entities;
 using AdventureWorks.WebApi.Infrastructure.Messaging;
+using AdventureWorks.WebApi.Common.Models;
 
 namespace AdventureWorks.WebApi.EndPoints.HumanResources.Employee;
 
@@ -91,7 +93,8 @@ public static class GetEmployee
 
                 var response = await queryDispatcher.Dispatch<GetEmployeeQuery, GetEmployeeResponse>(query, cancellationToken);
                 return response is null ? Results.NotFound() : Results.Ok(response);
-            });
+            })
+            .RequireAuthorization(Policies.ReadEmployees); // Require permission to read employees
         }
     }
 

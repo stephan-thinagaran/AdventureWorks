@@ -39,6 +39,7 @@ public static class DependencyInjection
         webApplication.MapCarter();
         webApplication.UseMiddleware<RequestContextLoggingMiddleware>();
         webApplication.UseRequestContextLogging();
+        webApplication.UseAuthenticationMiddleware(); // Add authentication middleware
         webApplication.UseExceptionHandler();
         webApplication.MapSwaggerEndpoints();
         return webApplication;
@@ -70,6 +71,9 @@ public static class DependencyInjection
 
         //services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped(typeof(SqlRepository<>));
+
+        // Add Authentication and Authorization
+        services.AddAuthenticationServices(configuration);
 
         return services;
     }
